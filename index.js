@@ -35,7 +35,7 @@ app.use(express.json());
 // Routes middlewares
 app.use('/auth', authRoute);
 app.use('*', verifyToken);
-app.post('/createOrganization', createOrganization); // à virer
+app.use('/users', usersRoute);
 
 
 app.listen(3000, () => console.log('Server up and running !'));

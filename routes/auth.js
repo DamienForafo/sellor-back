@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const User = require('../models/User');
-const {registerValidate, loginValidate, teamValidate} = require('../validation');
+const {registerValidate, loginValidate} = require('../validation');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -25,7 +25,7 @@ router.post('/register', async (req, res) => {
     // Save
     try {
         const savedUser = await user.save();
-        res.send({user: user._id});
+        res.send({createdUser: user._id});
     }
     catch (err) {
         res.status(400).send(err);

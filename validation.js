@@ -18,17 +18,8 @@ const loginValidate = data => {
     return registerSchema.validate(data);
 };
 
-const teamValidate = data => {
-    const teamSchema = joi.object({
-        name: joi.string().min(1).max(255).required(),
-        description: joi.string()
-    });
-    return teamSchema.validate(data);
-};
-
 
 module.exports = {
     'registerValidate': registerValidate,
-    'loginValidate': loginValidate,
-    'teamValidate': teamValidate
+    'loginValidate': loginValidate
 };

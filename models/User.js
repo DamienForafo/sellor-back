@@ -20,10 +20,6 @@ const userSchema = new mongoose.Schema({
         min: 6,
         max: 1024
     },
-    roles: {
-        type: Object,
-        default: {}
-    },
     creationDate: {
         type: Date,
         immutable: true,
