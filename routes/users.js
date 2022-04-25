@@ -8,7 +8,7 @@ const {registerValidate} = require('../validation');
 
 
 
-// Get all users
+// à modif pour voir que son profil
 router.get('/', async (req, res) => {
     try {
         const content = await User.find();
@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-// Get a precise user
+// à virer
 router.get('/:id', async (req, res) => {
     try {
         const content = await User.findById(req.params.id);
@@ -75,9 +75,10 @@ router.put('/', async (req, res) => {
         ) return res.status(400).send('Each bucketId needs its amount and vice-versa');
         for (let i = 0; i < toUpdate.bucketIds.length; i++) {
             let prodId = toUpdate.bucketIds[i];
+            let prodAmount = bucketAmounts[i];
             let prod = await Product.findOne({_id: prodId});
             let prodStock = prod.stock;
-            if (toUpdate.bucketAmounts[i] > prodStock) return res.status(403).send(`This amount of product ${prodId} is not available`);
+            if (toUpdate.prodAmount > prodStock) return res.status(403).send(`The amount ${prodAmount} of product ${prodId} is not available`);
         }
     }
     // Check the schema
