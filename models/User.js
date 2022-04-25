@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Product = require('./Product');
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -19,6 +20,15 @@ const userSchema = new mongoose.Schema({
         required: true,
         min: 6,
         max: 1024
+    },
+    bucketIds: {
+        type: [mongoose.SchemaTypes.ObjectId],
+        ref: Product,
+        default: []
+    },
+    bucketAmounts: {
+        type: [Number],
+        default: []
     },
     creationDate: {
         type: Date,
