@@ -26,8 +26,8 @@ router.get("/:id", async (req, res) => {
 });
 
 // Update the current user
-router.put("/:id", async (req, res) => {
-  const user = await User.findOne({ _id: req.params.id });
+router.put("/", async (req, res) => {
+  const user = await User.findOne({ _id: req.user._id });
   const rawBody = req.body;
   let toUpdate = {
     name: user.name,
@@ -42,13 +42,7 @@ router.put("/:id", async (req, res) => {
         toUpdate.name = rawBody.name;
         break;
       case "email":
-        const emailExists = await User.exists(
-          { email: rawBody.email },
-          function (err, doc) {
-            console.log(doc);
-          }
-        );
-        console.log(rawBody.email);
+        const emailExists = await User.exists({ email: rawBody.email });
         if (emailExists) return res.status(400).send("Email already used");
         toUpdate.email = rawBody.email;
         break;
@@ -67,8 +61,8 @@ router.put("/:id", async (req, res) => {
   // Check the bucket
   const toUpdateKeys = Object.keys(toUpdate);
   if (
-    (toUpdateKeys.includes("bucketIds") && toUpdate.bucketIds != null) ||
-    (toUpdateKeys.includes("bucketAmounts") && toUpdate.bucketAmounts != null)
+    toUpdateKeys.includes("bucketIds") ||
+    toUpdateKeys.includes("bucketAmounts")
   ) {
     if (
       (toUpdateKeys.includes("bucketIds") &&
@@ -77,8 +71,6 @@ router.put("/:id", async (req, res) => {
         !toUpdateKeys.includes("bucketIds")) ||
       (toUpdateKeys.includes("bucketAmounts") &&
         toUpdateKeys.includes("bucketIds") &&
-        toUpdate.bucketAmounts != null &&
-        toUpdate.bucketIds != null &&
         toUpdate.bucketIds.length !== toUpdate.bucketAmounts.length)
     )
       return res

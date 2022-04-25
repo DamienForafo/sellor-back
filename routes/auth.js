@@ -48,18 +48,15 @@ router.post("/login", async (req, res) => {
     .send({ token: token, _id: user.id, email: req.body.email }); // ("auth-token" is arbitrary)
 });
 
-// GET LoggedIn user
-router.get("/user", async (req, res) => {
-  console.log(req);
-  res.send({ data: "hello" });
-  // try {
-  //     const content = await User.find();
-  //     res.json(content);
-  // }
-  // catch(err) {
-  //     res.json({message: err});
-  // }
-});
+// à virer
+router.get("/me", async (req, res) => {
+    try {
+      const content = await User.findById(req.user._id);
+      res.json(content);
+    } catch (err) {
+      res.json({ message: err });
+    }
+  });
 
 router.post("/logout", async (req, res) => {
   res.send("hello");
