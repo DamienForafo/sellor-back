@@ -50,6 +50,7 @@ router.post("/login", async (req, res) => {
 
 // GET LoggedIn user
 router.get("/user", async (req, res) => {
+  console.log(req);
   res.send({ data: "hello" });
   // try {
   //     const content = await User.find();
