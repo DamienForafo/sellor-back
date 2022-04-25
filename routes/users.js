@@ -8,10 +8,21 @@ const {registerValidate} = require('../validation');
 
 
 
-// à modif pour voir que son profil
+// à virer
 router.get('/', async (req, res) => {
     try {
         const content = await User.find();
+        res.json(content);
+    }
+    catch(err) {
+        res.json({message: err});
+    }
+});
+
+// à modif pour avoir juste '/'
+router.get('/me', async (req, res) => {
+    try {
+        const content = await User.findById(req.user._id);
         res.json(content);
     }
     catch(err) {
