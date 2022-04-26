@@ -50,24 +50,15 @@ router.post("/login", async (req, res) => {
 
 // get LoggedIn user
 router.get("/me", async (req, res) => {
-<<<<<<< HEAD
-  try {
-    const content = await User.findById(req.user._id);
-=======
   console.log(req.headers);
   try {
     let decode = jwt.decode(req.headers.authorization.split(" ")[1]);
     const content = await User.findById(decode._id);
->>>>>>> 361ae64e2ebb6120f8ccecfbeed811bdf5968eff
     res.json(content);
   } catch (err) {
     res.json({ message: err });
   }
 });
-<<<<<<< HEAD
-
-=======
->>>>>>> 361ae64e2ebb6120f8ccecfbeed811bdf5968eff
 router.post("/logout", async (req, res) => {
   res.send("hello");
 });
