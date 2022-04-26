@@ -5,10 +5,21 @@ const Product = require("../models/Product");
 const bcrypt = require("bcryptjs");
 const { registerValidate } = require("../validation");
 
+
 // à modif pour voir que son profil
 router.get("/", async (req, res) => {
   try {
     const content = await User.find();
+    res.json(content);
+  } catch (err) {
+    res.json({ message: err });
+  }
+});
+
+// voir mon profil
+router.get("/me", async (req, res) => {
+  try {
+    const content = await User.findById(req.user._id);
     res.json(content);
   } catch (err) {
     res.json({ message: err });
@@ -58,6 +69,8 @@ router.put("/", async (req, res) => {
         break;
     }
   }
+
+
   // Check the bucket
   const toUpdateKeys = Object.keys(toUpdate);
   if (
