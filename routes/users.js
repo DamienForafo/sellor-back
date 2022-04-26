@@ -93,7 +93,7 @@ router.put("/", async (req, res) => {
         .send("Each bucketId needs its amount and vice-versa");
     for (let i = 0; i < toUpdate.bucketIds.length; i++) {
       let prodId = toUpdate.bucketIds[i];
-      let prodAmount = bucketAmounts[i];
+      let prodAmount = toUpdate.bucketAmounts[i];
       let prod = await Product.findOne({ _id: prodId });
       let prodStock = prod.stock;
       if (toUpdate.prodAmount > prodStock)
