@@ -50,13 +50,13 @@ router.post("/login", async (req, res) => {
 
 // à virer
 router.get("/me", async (req, res) => {
-    try {
-      const content = await User.findById(req.user._id);
-      res.json(content);
-    } catch (err) {
-      res.json({ message: err });
-    }
-  });
+  try {
+    const content = await User.findById(req.user._id);
+    res.json(content);
+  } catch (err) {
+    res.json({ message: err });
+  }
+});
 
 router.post("/logout", async (req, res) => {
   res.send("hello");
