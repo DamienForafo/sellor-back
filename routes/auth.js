@@ -48,16 +48,17 @@ router.post("/login", async (req, res) => {
     .send({ token: token, _id: user.id, email: req.body.email }); // ("auth-token" is arbitrary)
 });
 
-// à virer
+// get LoggedIn user
 router.get("/me", async (req, res) => {
-    try {
-      const content = await User.findById(req.user._id);
-      res.json(content);
-    } catch (err) {
-      res.json({ message: err });
-    }
-  });
-
+  console.log(req.headers);
+  try {
+    let decode = jwt.decode(req.headers.authorization.split(" ")[1]);
+    const content = await User.findById(decode._id);
+    res.json(content);
+  } catch (err) {
+    res.json({ message: err });
+  }
+});
 router.post("/logout", async (req, res) => {
   res.send("hello");
 });

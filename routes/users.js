@@ -61,8 +61,8 @@ router.put("/", async (req, res) => {
   // Check the bucket
   const toUpdateKeys = Object.keys(toUpdate);
   if (
-    toUpdateKeys.includes("bucketIds") ||
-    toUpdateKeys.includes("bucketAmounts")
+    (toUpdateKeys.includes("bucketIds") && toUpdate.bucketIds != null) ||
+    (toUpdateKeys.includes("bucketAmounts") && toUpdate.bucketAmounts != null)
   ) {
     if (
       (toUpdateKeys.includes("bucketIds") &&
@@ -71,6 +71,8 @@ router.put("/", async (req, res) => {
         !toUpdateKeys.includes("bucketIds")) ||
       (toUpdateKeys.includes("bucketAmounts") &&
         toUpdateKeys.includes("bucketIds") &&
+        toUpdate.bucketAmounts != null &&
+        toUpdate.bucketIds != null &&
         toUpdate.bucketIds.length !== toUpdate.bucketAmounts.length)
     )
       return res
